@@ -10,9 +10,9 @@
 body {
     margin: 0;
     padding: 0;
-    background: #000;
-    color: white;
+    background: linear-gradient(135deg, #001f3f, #003d7a);
     font-family: Arial, sans-serif;
+    color: white;
 }
 
 .container {
@@ -25,25 +25,25 @@ body {
 h1 {
     text-align: center;
     margin-bottom: 20px;
-    font-size: 30px;
+    font-size: 32px;
     font-weight: bold;
-    color: #4ca3ff;
+    color: #66c3ff;
 }
 
 /* Form Box */
 .form-box {
-    background: #111;
+    background: rgba(0,0,0,0.3);
     padding: 20px;
     border-radius: 10px;
-    border: 1px solid #333;
+    border: 1px solid #0066cc;
 }
 
 input, select {
     width: 100%;
     padding: 12px;
     margin-top: 10px;
-    background: #222;
-    border: 1px solid #444;
+    background: #002f5e;
+    border: 1px solid #005bb5;
     color: white;
     border-radius: 6px;
 }
@@ -65,32 +65,36 @@ button:hover {
     background: #006fe6;
 }
 
-/* RECEIPT DESIGN */
+/* RECEIPT BOX */
 #receipt {
     display: none;
     margin-top: 30px;
-    background: #000;
+    background: rgba(0,0,20,0.7);
     padding: 25px;
     border-radius: 12px;
-    border: 1px solid #333;
+    border: 1px solid #007bff;
     position: relative;
+    overflow: hidden;
 }
 
+/* Kelly Image */
 #kelly {
     position: absolute;
     right: 10px;
     top: 10px;
-    width: 150px;
-    opacity: 0.9;
+    width: 170px;
+    opacity: 0.95;
 }
 
+/* Receipt Title */
 .receipt-title {
     font-size: 26px;
     font-weight: bold;
-    color: #4ca3ff;
+    color: #77d0ff;
     margin-bottom: 20px;
 }
 
+/* Row Style */
 .row {
     display: flex;
     justify-content: space-between;
@@ -98,6 +102,7 @@ button:hover {
     font-size: 17px;
 }
 
+/* Download Button */
 .download-btn {
     margin-top: 20px;
     background: #2ecc71;
@@ -113,8 +118,6 @@ button:hover {
 <h1>Tunzy Top Up</h1>
 
 <div class="form-box">
-    <label>UID</label>
-    <input type="text" id="uid">
 
     <label>Diamond Purchased</label>
     <input type="number" id="diamonds">
@@ -136,28 +139,30 @@ button:hover {
 
 <!-- RECEIPT -->
 <div id="receipt">
-    <img src="kelly.png" id="kelly">
+
+    <!-- Kelly JPEG -->
+    <img src="images/kelly.jpeg" id="kelly">
 
     <div class="receipt-title">Tunzy Top Up Receipt</div>
 
-    <div class="row"><span>UID:</span> <span id="r_uid"></span></div>
     <div class="row"><span>Diamond:</span> <span id="r_diamonds"></span></div>
     <div class="row"><span>Amount Paid:</span> <span id="r_amount"></span></div>
     <div class="row"><span>Payment Method:</span> <span id="r_payment"></span></div>
     <div class="row"><span>Transaction ID:</span> <span id="r_token"></span></div>
     <div class="row"><span>Date & Time:</span> <span id="r_time"></span></div>
-    <div class="row"><span>Status:</span> <span style="color:#2ecc71">Successful</span></div>
+    <div class="row"><span>Status:</span> <span style="color:#2ecc71;">Successful</span></div>
 
-    <button class="download-btn" onclick="downloadHD()">Download HD</button>
+    <button class="download-btn" onclick="downloadHD()">Download HD Receipt</button>
 </div>
 
 </div>
 
+<!-- HD Screenshot Script -->
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 
 <script>
 
-// random token
+// Generate random token
 function generateToken() {
     return "TNZ-" + Math.floor(Math.random() * 9000000 + 1000000) + "-FF";
 }
@@ -165,21 +170,29 @@ function generateToken() {
 function generateReceipt() {
     document.getElementById("receipt").style.display = "block";
 
-    document.getElementById("r_uid").innerText = document.getElementById("uid").value;
-    document.getElementById("r_diamonds").innerText = document.getElementById("diamonds").value + " 💎";
-    document.getElementById("r_amount").innerText = document.getElementById("amount").value;
-    document.getElementById("r_payment").innerText = document.getElementById("payment").value;
+    document.getElementById("r_diamonds").innerText =
+        document.getElementById("diamonds").value + " 💎";
+
+    document.getElementById("r_amount").innerText =
+        document.getElementById("amount").value;
+
+    document.getElementById("r_payment").innerText =
+        document.getElementById("payment").value;
+
     document.getElementById("r_token").innerText = generateToken();
-    document.getElementById("r_time").innerText = new Date().toLocaleString();
+
+    document.getElementById("r_time").innerText =
+        new Date().toLocaleString();
 }
 
+// Download HD PNG
 function downloadHD() {
     html2canvas(document.querySelector("#receipt"), {
-        scale: 4 // HD quality
+        scale: 4 // HD
     }).then(canvas => {
         const link = document.createElement("a");
-        link.download = "tunzy_receipt.png";
-        link.href = canvas.toDataURL();
+        link.download = "tunzy_receipt_hd.png";
+        link.href = canvas.toDataURL("image/png");
         link.click();
     });
 }
