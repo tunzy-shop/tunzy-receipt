@@ -8,47 +8,53 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #001f3f, #003d7a);
+    background: #000; /* black background */
     font-family: Arial, sans-serif;
     color: white;
 }
 .container {
     width: 100%;
-    max-width: 900px;
+    max-width: 1000px;
     margin: auto;
     padding: 20px;
 }
 h1 {
     text-align: center;
     margin-bottom: 20px;
-    font-size: 32px;
+    font-size: 36px;
     font-weight: bold;
     color: #66c3ff;
 }
 .form-box {
     background: rgba(0,0,0,0.3);
-    padding: 20px;
-    border-radius: 10px;
-    border: 1px solid #0066cc;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #007bff;
     margin-bottom: 30px;
+}
+label {
+    display: block;
+    margin-top: 15px;
+    font-size: 16px;
 }
 input, select {
     width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    background: #002f5e;
-    border: 1px solid #005bb5;
+    padding: 14px;
+    margin-top: 8px;
+    background: #111;
+    border: 1px solid #007bff;
     color: white;
     border-radius: 6px;
+    font-size: 16px;
 }
 button {
     width: 100%;
     margin-top: 20px;
-    padding: 14px;
+    padding: 16px;
     background: #0a84ff;
     border: none;
     color: white;
-    font-size: 17px;
+    font-size: 18px;
     font-weight: bold;
     border-radius: 8px;
     cursor: pointer;
@@ -61,87 +67,73 @@ button:hover {
 #receipt {
     display: none;
     margin-top: 30px;
-    background: rgba(0,0,20,0.7);
-    border-radius: 12px;
+    background: #000;
+    border-radius: 14px;
     border: 1px solid #007bff;
     overflow: hidden;
     position: relative;
-    padding-bottom: 20px;
+    padding-bottom: 25px;
 }
 
-/* Top header banner */
+/* Header banner */
 .receipt-header {
     position: relative;
-    height: 250px;
+    height: 300px;
     width: 100%;
 }
-
 #kelly {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0.7; /* transparent */
 }
 
-/* ✓ status icon */
-.status-icon {
+/* Status/proceed blue rectangle */
+.status-box {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    font-weight: bold;
+    top: 25px;
+    left: 25px;
+    background: #0096ff;
     color: white;
+    padding: 6px 14px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 18px;
 }
 
-/* Token and copy icon */
+/* Transaction ID centered over Kelly */
 .token-box {
     position: absolute;
-    top: 80px;
-    right: 20px;
-    text-align: right;
-    font-size: 14px;
-}
-.token-box span {
-    font-weight: bold;
+    top: 120px; /* vertical placement */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    color: white;
+    text-align: center;
 }
 .copy-btn {
-    margin-left: 5px;
+    margin-left: 6px;
     cursor: pointer;
     color: #77d0ff;
     font-weight: bold;
-}
-
-/* Title overlay (optional if needed) */
-.title-box {
-    position: absolute;
-    left: 20px;
-    top: 20px;
-    font-size: 28px;
-    font-weight: bold;
-    color: #77d0ff;
+    font-size: 16px;
 }
 
 /* Receipt details */
 .receipt-details {
-    padding: 20px;
-    background: rgba(0,0,20,0.5);
+    padding: 25px;
 }
-
 .row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 12px;
-    font-size: 17px;
+    margin-bottom: 14px;
+    font-size: 18px;
 }
-.payment-name {
-    margin-top: 5px;
-    font-size: 14px;
+.bottom-name {
+    margin-top: 18px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: right;
     color: #77d0ff;
 }
 
@@ -149,11 +141,12 @@ button:hover {
     margin: 20px;
     width: calc(100% - 40px);
     background: #2ecc71;
-    padding: 14px;
+    padding: 16px;
     border: none;
     font-weight: bold;
     cursor: pointer;
     border-radius: 8px;
+    font-size: 18px;
 }
 .download-btn:hover {
     background: #28a745;
@@ -166,11 +159,14 @@ button:hover {
 <h1>Tunzy Top Up</h1>
 
 <div class="form-box">
-    <label>Diamond Purchased</label>
-    <input type="number" id="diamonds">
+    <label>Total Diamonds</label>
+    <input type="number" id="diamonds" placeholder="Enter total diamonds">
 
-    <label>Amount Paid</label>
-    <input type="text" id="amount">
+    <label>Price</label>
+    <input type="text" id="price" placeholder="Enter price">
+
+    <label>Game</label>
+    <input type="text" id="game" placeholder="Enter game">
 
     <label>Payment Method</label>
     <select id="payment">
@@ -187,18 +183,20 @@ button:hover {
 <div id="receipt">
     <div class="receipt-header">
         <img src="images/kelly.jpeg" id="kelly">
-        <div class="status-icon">✓</div>
+        <div class="status-box">PROCCED</div>
         <div class="token-box">
-            <div>Transaction ID: <span id="r_token"></span><span class="copy-btn" onclick="copyToken()">📋</span></div>
+            Transaction ID: <span id="r_token"></span>
+            <span class="copy-btn" onclick="copyToken()">📋</span>
         </div>
     </div>
 
     <div class="receipt-details">
         <div class="row"><span>Diamond:</span> <span id="r_diamonds"></span></div>
-        <div class="row"><span>Amount Paid:</span> <span id="r_amount"></span></div>
+        <div class="row"><span>Price:</span> <span id="r_price"></span></div>
+        <div class="row"><span>Game:</span> <span id="r_game"></span></div>
         <div class="row"><span>Payment Method:</span> <span id="r_payment"></span></div>
-        <div class="payment-name">Tunzy Top Up</div>
-        <div class="row"><span>Date & Time:</span> <span id="r_time"></span></div>
+        <div class="bottom-name">Tunzy Top Up</div>
+        <div class="row"><span>Transaction Time:</span> <span id="r_time"></span></div>
     </div>
 </div>
 
@@ -215,7 +213,8 @@ function generateToken() {
 function generateReceipt() {
     document.getElementById("receipt").style.display = "block";
     document.getElementById("r_diamonds").innerText = document.getElementById("diamonds").value + " 💎";
-    document.getElementById("r_amount").innerText = document.getElementById("amount").value;
+    document.getElementById("r_price").innerText = document.getElementById("price").value;
+    document.getElementById("r_game").innerText = document.getElementById("game").value;
     document.getElementById("r_payment").innerText = document.getElementById("payment").value;
     document.getElementById("r_token").innerText = generateToken();
     document.getElementById("r_time").innerText = new Date().toLocaleString();
