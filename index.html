@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <title>Tunzy Top Up Receipt</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <style>
 body {
     margin: 0;
@@ -13,14 +12,12 @@ body {
     font-family: Arial, sans-serif;
     color: white;
 }
-
 .container {
     width: 100%;
     max-width: 900px;
     margin: auto;
     padding: 20px;
 }
-
 h1 {
     text-align: center;
     margin-bottom: 20px;
@@ -28,7 +25,6 @@ h1 {
     font-weight: bold;
     color: #66c3ff;
 }
-
 .form-box {
     background: rgba(0,0,0,0.3);
     padding: 20px;
@@ -36,7 +32,6 @@ h1 {
     border: 1px solid #0066cc;
     margin-bottom: 30px;
 }
-
 input, select {
     width: 100%;
     padding: 12px;
@@ -46,7 +41,6 @@ input, select {
     color: white;
     border-radius: 6px;
 }
-
 button {
     width: 100%;
     margin-top: 20px;
@@ -59,12 +53,11 @@ button {
     border-radius: 8px;
     cursor: pointer;
 }
-
 button:hover {
     background: #006fe6;
 }
 
-/* Receipt Styles */
+/* Receipt styles */
 #receipt {
     display: none;
     margin-top: 30px;
@@ -73,13 +66,14 @@ button:hover {
     border: 1px solid #007bff;
     overflow: hidden;
     position: relative;
+    padding-bottom: 20px;
 }
 
 /* Top header banner */
 .receipt-header {
     position: relative;
-    height: 220px; /* taller banner like Shop2Game */
-    background: #001f3f;
+    height: 250px;
+    width: 100%;
 }
 
 #kelly {
@@ -88,33 +82,49 @@ button:hover {
     object-fit: cover;
 }
 
-/* Title and token/status overlay */
+/* ✓ status icon */
+.status-icon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Token and copy icon */
+.token-box {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    text-align: right;
+    font-size: 14px;
+}
+.token-box span {
+    font-weight: bold;
+}
+.copy-btn {
+    margin-left: 5px;
+    cursor: pointer;
+    color: #77d0ff;
+    font-weight: bold;
+}
+
+/* Title overlay (optional if needed) */
 .title-box {
     position: absolute;
     left: 20px;
     top: 20px;
-}
-
-.receipt-title {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: bold;
     color: #77d0ff;
-}
-
-.token-status {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    text-align: right;
-}
-
-.token-status div {
-    font-size: 16px;
-}
-
-.token-status span {
-    font-weight: bold;
-    color: #2ecc71;
 }
 
 /* Receipt details */
@@ -129,6 +139,11 @@ button:hover {
     margin-bottom: 12px;
     font-size: 17px;
 }
+.payment-name {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #77d0ff;
+}
 
 .download-btn {
     margin: 20px;
@@ -140,7 +155,6 @@ button:hover {
     cursor: pointer;
     border-radius: 8px;
 }
-
 .download-btn:hover {
     background: #28a745;
 }
@@ -173,12 +187,9 @@ button:hover {
 <div id="receipt">
     <div class="receipt-header">
         <img src="images/kelly.jpeg" id="kelly">
-        <div class="title-box">
-            <div class="receipt-title">Tunzy Top Up</div>
-        </div>
-        <div class="token-status">
-            <div>Transaction ID: <span id="r_token"></span></div>
-            <div>Status: Successful</div>
+        <div class="status-icon">✓</div>
+        <div class="token-box">
+            <div>Transaction ID: <span id="r_token"></span><span class="copy-btn" onclick="copyToken()">📋</span></div>
         </div>
     </div>
 
@@ -186,11 +197,13 @@ button:hover {
         <div class="row"><span>Diamond:</span> <span id="r_diamonds"></span></div>
         <div class="row"><span>Amount Paid:</span> <span id="r_amount"></span></div>
         <div class="row"><span>Payment Method:</span> <span id="r_payment"></span></div>
+        <div class="payment-name">Tunzy Top Up</div>
         <div class="row"><span>Date & Time:</span> <span id="r_time"></span></div>
     </div>
-
-    <button class="download-btn" onclick="downloadHD()">Download HD Receipt</button>
 </div>
+
+<button class="download-btn" onclick="downloadHD()">Download HD Receipt</button>
+
 </div>
 
 <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
@@ -209,11 +222,19 @@ function generateReceipt() {
 }
 
 function downloadHD() {
-    html2canvas(document.querySelector("#receipt"), { scale: 4 }).then(canvas => {
+    const receipt = document.querySelector("#receipt");
+    html2canvas(receipt, { scale: 4 }).then(canvas => {
         const link = document.createElement("a");
         link.download = "tunzy_receipt_hd.png";
         link.href = canvas.toDataURL("image/png");
         link.click();
+    });
+}
+
+function copyToken() {
+    const token = document.getElementById("r_token").innerText;
+    navigator.clipboard.writeText(token).then(() => {
+        alert("Token copied to clipboard!");
     });
 }
 </script>
