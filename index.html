@@ -2,162 +2,188 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tunzy Top Up Receipt</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg, #0a4cff, #0f75ff);
-        margin: 0;
-        padding: 0;
-        color: #fff;
-    }
-    .container {
-        max-width: 700px;
-        margin: 40px auto;
-        background: #ffffff;
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 0 18px rgba(0,0,0,0.35);
-        color: #000;
-    }
-    h1 {
-        text-align: center;
-        color: #0a4cff;
-        font-size: 28px;
-        font-weight: 700;
-    }
-    h1 span {
-        font-size: 30px;
-    }
-    .input-group {
-        margin-bottom: 18px;
-    }
-    label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 6px;
-        font-size: 15px;
-    }
-    input, select {
-        width: 100%;
-        padding: 12px;
-        border-radius: 8px;
-        border: 1px solid #ccc;
-        font-size: 15px;
-    }
-    button {
-        width: 100%;
-        padding: 14px;
-        background: #0a4cff;
-        border: none;
-        border-radius: 8px;
-        font-size: 17px;
-        color: white;
-        cursor: pointer;
-        margin-top: 10px;
-    }
-    button:hover {
-        background: #0840d3;
-    }
-    .receipt {
-        margin-top: 35px;
-        background: #f5f7ff;
-        padding: 20px;
-        border-radius: 10px;
-        display: none;
-        border: 2px solid #0a4cff;
-    }
-    .row {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 0;
-        border-bottom: 1px solid #ddd;
-        font-size: 16px;
-    }
-    .row:last-child {
-        border-bottom: none;
-    }
-    .status-success {
-        color: green;
-        font-weight: bold;
-    }
+
+body {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    color: #4ca3ff;
+}
+
+/* Form Box */
+.form-box {
+    background: #111;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #333;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background: #222;
+    border: 1px solid #444;
+    color: white;
+    border-radius: 6px;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    background: #0a84ff;
+    border: none;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #006fe6;
+}
+
+/* RECEIPT DESIGN */
+#receipt {
+    display: none;
+    margin-top: 30px;
+    background: #000;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #333;
+    position: relative;
+}
+
+#kelly {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 150px;
+    opacity: 0.9;
+}
+
+.receipt-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #4ca3ff;
+    margin-bottom: 20px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 17px;
+}
+
+.download-btn {
+    margin-top: 20px;
+    background: #2ecc71;
+}
+
 </style>
+
 </head>
 <body>
 
 <div class="container">
-    <h1><span>🎅</span> Tunzy Top Up</h1>
 
-    <div class="input-group">
-        <label>Full Name</label>
-        <input id="name" type="text" placeholder="Enter name">
-    </div>
+<h1>Tunzy Top Up</h1>
 
-    <div class="input-group">
-        <label>UID</label>
-        <input id="uid" type="number" placeholder="Enter game UID">
-    </div>
+<div class="form-box">
+    <label>UID</label>
+    <input type="text" id="uid">
 
-    <div class="input-group">
-        <label>Payment Option</label>
-        <select id="payment">
-            <option value="Bank Transfer">Bank Transfer</option>
-            <option value="Opay">Opay</option>
-            <option value="PalmPay">PalmPay</option>
-            <option value="Crypto">Crypto</option>
-        </select>
-    </div>
+    <label>Diamond Purchased</label>
+    <input type="number" id="diamonds">
 
-    <div class="input-group">
-        <label>Diamond Purchased (💎)</label>
-        <input id="diamond" type="number" placeholder="e.g. 100, 310, 520">
-    </div>
+    <label>Amount Paid</label>
+    <input type="text" id="amount">
 
-    <div class="input-group">
-        <label>Amount Paid</label>
-        <input id="amount" type="text" placeholder="Enter amount paid">
-    </div>
-
-    <div class="input-group">
-        <label>Random Token (Reference ID)</label>
-        <input id="token" type="text" placeholder="Enter transaction token">
-    </div>
+    <label>Payment Method</label>
+    <select id="payment">
+        <option>Bank Transfer</option>
+        <option>Opay</option>
+        <option>Palmpay</option>
+        <option>Credit Card</option>
+        <option>Crypto</option>
+    </select>
 
     <button onclick="generateReceipt()">Generate Receipt</button>
-
-    <div class="receipt" id="receiptBox">
-        <h2 style="text-align:center;color:#0a4cff;">Official Receipt - Tunzy Top Up</h2>
-
-        <div class="row"><strong>UID</strong> <span id="r_uid"></span></div>
-        <div class="row"><strong>Name</strong> <span id="r_name"></span></div>
-        <div class="row"><strong>Diamond Purchased</strong> <span id="r_diamond">💎</span></div>
-        <div class="row"><strong>Amount Paid</strong> <span id="r_amount"></span></div>
-        <div class="row"><strong>Transaction ID</strong> <span id="r_token"></span></div>
-        <div class="row"><strong>Payment Option</strong> <span id="r_payment"></span></div>
-        <div class="row"><strong>Date & Time</strong> <span id="r_time"></span></div>
-        <div class="row"><strong>Status</strong> <span class="status-success">SUCCESS ✔</span></div>
-
-        <p style="text-align:center;margin-top:20px;font-size:14px;color:#555;">
-            Powered by <strong>Tunzy Top Up</strong> | Garena Free Fire Service
-        </p>
-    </div>
 </div>
 
+<!-- RECEIPT -->
+<div id="receipt">
+    <img src="kelly.png" id="kelly">
+
+    <div class="receipt-title">Tunzy Top Up Receipt</div>
+
+    <div class="row"><span>UID:</span> <span id="r_uid"></span></div>
+    <div class="row"><span>Diamond:</span> <span id="r_diamonds"></span></div>
+    <div class="row"><span>Amount Paid:</span> <span id="r_amount"></span></div>
+    <div class="row"><span>Payment Method:</span> <span id="r_payment"></span></div>
+    <div class="row"><span>Transaction ID:</span> <span id="r_token"></span></div>
+    <div class="row"><span>Date & Time:</span> <span id="r_time"></span></div>
+    <div class="row"><span>Status:</span> <span style="color:#2ecc71">Successful</span></div>
+
+    <button class="download-btn" onclick="downloadHD()">Download HD</button>
+</div>
+
+</div>
+
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
 <script>
-function generateReceipt() {
-    document.getElementById("r_name").innerText = document.getElementById("name").value;
-    document.getElementById("r_uid").innerText = document.getElementById("uid").value;
-    document.getElementById("r_diamond").innerText = document.getElementById("diamond").value + " 💎";
-    document.getElementById("r_amount").innerText = document.getElementById("amount").value;
-    document.getElementById("r_token").innerText = document.getElementById("token").value;
-    document.getElementById("r_payment").innerText = document.getElementById("payment").value;
 
-    const now = new Date();
-    document.getElementById("r_time").innerText = now.toLocaleString();
-
-    document.getElementById("receiptBox").style.display = "block";
+// random token
+function generateToken() {
+    return "TNZ-" + Math.floor(Math.random() * 9000000 + 1000000) + "-FF";
 }
+
+function generateReceipt() {
+    document.getElementById("receipt").style.display = "block";
+
+    document.getElementById("r_uid").innerText = document.getElementById("uid").value;
+    document.getElementById("r_diamonds").innerText = document.getElementById("diamonds").value + " 💎";
+    document.getElementById("r_amount").innerText = document.getElementById("amount").value;
+    document.getElementById("r_payment").innerText = document.getElementById("payment").value;
+    document.getElementById("r_token").innerText = generateToken();
+    document.getElementById("r_time").innerText = new Date().toLocaleString();
+}
+
+function downloadHD() {
+    html2canvas(document.querySelector("#receipt"), {
+        scale: 4 // HD quality
+    }).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "tunzy_receipt.png";
+        link.href = canvas.toDataURL();
+        link.click();
+    });
+}
+
 </script>
 
 </body>
